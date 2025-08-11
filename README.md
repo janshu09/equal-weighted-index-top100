@@ -154,4 +154,79 @@ See requirements.txt for pinned versions. Core packages:
 
 - sqlite3 (built-in)
 
-- pathlib, operator (standard library)
+- pathlib, operator (standard library
+
+## Index Data Maintenance and Update Strategy
+- To ensure the index remains accurate and relevant over time, we adopt the following maintenance approach:
+
+
+- Daily Rebalancing:
+The index is recalculated and rebalanced daily based on the top 100 US stocks by market capitalization, as stored in the transformed_top100_tickers table. This allows the index to reflect the most current market dynamics.
+
+
+- Automated Data Refresh:
+The data extraction scripts are designed to pull the latest pricing and market cap data daily via the Polygon.io API (or CSV fallback). These scripts can be scheduled to run automatically using tools like cron, Airflow, or Autosys.
+
+
+- Change Tracking:
+All composition changes—added/removed tickers—are tracked and stored in the Excel report (composition_changes sheet) along with performance metrics. This provides key data-points into index value evolution.
+
+## Scaling and Future Improvements
+As the project grows, here are some suggestions and plans for scaling and enhancing the solution:
+
+### 1. Multi-Source Data Integration
+Alternative APIs: Integrate with multiple data providers like Yahoo Finance, Alpha Vantage, or IEX Cloud to avoid single-point dependency.
+
+Fallback Mechanism: Implement logic to switch providers if one fails to respond or returns incomplete data.
+
+### 2. Scaling & Automation Using AWS
+- To bring this solution to production scale, AWS services can be used to automate, monitor, and scale the entire pipeline efficiently
+
+
+    - AWS Lambda (Event-Driven Processing):
+Host core functions (e.g., API calls, data transformation, DB updates) as serverless Lambda functions, which can be triggered on a schedule or by events (e.g., new data arrival, file upload).
+
+    - Amazon EventBridge or CloudWatch Scheduler:
+Schedule daily index refresh jobs by triggering Lambda functions or ECS tasks without managing any infrastructure manually.
+
+    - AWS S3 (Data Lake Storage):
+Store raw CSV files, API responses, and final Excel reports in version-controlled S3 buckets for durable and scalable storage.
+
+    - Amazon RDS (Managed SQLite Alternative):
+Use Amazon RDS with PostgreSQL or MySQL to replace local SQLite for multi-user access, better performance, and reliability.
+
+    - AWS Fargate / ECS:
+Containerize the entire pipeline and deploy it on ECS with Fargate for scalable, serverless compute with no EC2 management overhead.
+
+    - AWS Athena + Glue (Optional Advanced Analytics):
+For larger datasets, use AWS Glue to catalog and transform raw data in S3 and query it with Athena for serverless analytics.
+
+    - Amazon QuickSight (Visualization):
+Create interactive dashboards and visualizations of index performance, daily changes, and historical trends.
+
+    - IAM & Secrets Manager:
+Manage API keys and DB credentials securely using AWS Secrets Manager and fine-grained access control with IAM.
+
+### 3. Scheduling
+- End-to-End Pipeline Automation: Use task schedulers (e.g., cron) or orchestration frameworks (e.g., Apache Airflow) to automate daily data extraction, transformation, and reporting.
+
+- Dockerize the Workflow: Containerizing the entire pipeline makes it portable and production-ready.
+
+### 4. Real-Time and Intraday Updates
+- Real-Time Data Feed: Upgrade to premium APIs for intraday or real-time data collection.
+
+- Streaming Architecture: Use message queues (Kafka) and event-driven architecture to respond to market changes as they happen.
+
+
+### 5. Advanced Analytics
+- Benchmark Comparison: Compare custom index performance against major benchmarks like the S&P 500 or Nasdaq.
+
+### 6. Dashboard for Visualization
+- Build a lightweight dashboard using tools like Streamlit, Dash, or a React frontend to display:
+
+    - Daily index values
+
+    - Composition heatmaps
+
+    - Performance analytics
+
