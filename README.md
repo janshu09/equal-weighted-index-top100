@@ -221,12 +221,21 @@ Manage API keys and DB credentials securely using AWS Secrets Manager and fine-g
 ### 5. Advanced Analytics
 - Benchmark Comparison: Compare custom index performance against major benchmarks like the S&P 500 or Nasdaq.
 
-### 6. Dashboard for Visualization
-- Build a lightweight dashboard using tools like Streamlit, Dash, or a React frontend to display:
+### 6. Data Visualization & Dashboarding
+For powerful and interactive reporting, the processed index data can be visualized using industry-standard BI tools such as Power BI or Tableau. 
+- Power BI or Tableau can connect directly to the SQLite database or exported Excel reports for seamless integration and automated refreshes.
 
-    - Daily index values
 
-    - Composition heatmaps
+- These tools enable rich dashboards that provide insights at a glance:
 
-    - Performance analytics
+
+    Daily Index Values:
+Track the day-by-day performance of the equal-weighted index through line charts and time-series visuals.
+
+    Constituent Heatmaps:
+Visualize top 100 stock compositions with sector-wise breakdowns or market cap weights using treemaps or heatmaps.
+
+    Performance Analytics:
+Showcase key metrics such as daily returns, cumulative returns, best/worst days, and rebalance summaries through dynamic visuals and filters.
+
 
