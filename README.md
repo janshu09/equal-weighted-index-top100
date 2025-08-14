@@ -34,7 +34,7 @@ Modular and scalable codebase with SQLite as a backend.
 ### 1. Extract Raw Stock Data
 ##### File: extract_stock_data.py
 
-- Reads tickers from constituents.csv using get_active_tickers_from_csv() or calls Polygon API dynamically using get_active_tickers_from_api(), based on the way we want to fetch the Ticker List data.
+- Reads tickers from constituents.csv using get_active_tickers_from_csv(). We have another method get_active_tickers_from_api() that calls Polygon API to fetch the same Ticker List. In this project, we are using the constituents.csv to fetch the Ticker List data.
 
 - Fetches daily Close_Price and Market_Cap for the past 30 days.
 
